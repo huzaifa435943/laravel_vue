@@ -1,14 +1,18 @@
-<script setup lang="ts">
+<script setup>
 import { useForm, Link } from '@inertiajs/vue3'
 
+const props = defineProps({
+  student: Object
+})
+
 const form = useForm({
-  name: '',
-  age: '',
-  image: null as File | null,
+  name: props.student.name,
+  age: props.student.age,
+  image: null,
 })
 
 function submit() {
-  form.post(route('student.store'))
+  form.put(route('student.update', props.student.id))
 }
 </script>
 
@@ -17,14 +21,14 @@ function submit() {
     <div class="w-full max-w-xl bg-white dark:bg-gray-800 shadow-xl rounded-xl p-8">
 
       <h1 class="text-2xl font-bold text-gray-800 dark:text-white mb-6">
-        Create Student
+        Edit Student
       </h1>
 
       <form @submit.prevent="submit" class="space-y-6">
 
         <!-- Name -->
         <div>
-          <label class="block text-sm font-medium text-gray-700  dark:text-gray-300 mb-1">
+          <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
             Name
           </label>
           <input
@@ -46,17 +50,25 @@ function submit() {
           <input
             v-model="form.age"
             type="number"
-            class="w-full rounded-full  border border-blue-500  p-2 focus:border-indigo-500 focus:ring-indigo-500"
+            class="w-full rounded-full border border-blue-500 p-2 focus:border-indigo-500 focus:ring-indigo-500"
           />
           <p v-if="form.errors.age" class="text-sm text-red-500 mt-1">
             {{ form.errors.age }}
           </p>
         </div>
 
+        <!-- Current Image -->
+        <div v-if="student.image">
+          <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+            Current Image
+          </label>
+          <img :src="`/${student.image}`" class="w-20 h-20 object-cover rounded-lg" />
+        </div>
+
         <!-- Image -->
         <div>
           <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-            Image
+            New Image (optional)
           </label>
           <input
             type="file"
@@ -87,7 +99,7 @@ function submit() {
             :disabled="form.processing"
             class="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg shadow transition disabled:opacity-50"
           >
-            Create
+            Update
           </button>
         </div>
 

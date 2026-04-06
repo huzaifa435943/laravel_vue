@@ -60,21 +60,21 @@ const page = usePage()
             </p>
 
             <div class="flex justify-between items-center mt-4">
-              <!-- <Link
-                :href="route('students.edit', student.id)"
+              <Link
+                :href="route('student.edit', student.id)"
                 class="text-sm font-medium text-yellow-600 hover:text-yellow-700"
               >
                 Edit
-              </Link> -->
+              </Link>
 
-              <!-- <Link
+              <Link
                 as="button"
                 method="delete"
-                :href="route('students.destroy', student.id)"
+                :href="route('student.destroy', student.id)"
                 class="text-sm font-medium text-red-600 hover:text-red-700"
               >
                 Delete
-              </Link> -->
+              </Link>
             </div>
           </div>
         </div>
